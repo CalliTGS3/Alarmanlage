@@ -5,28 +5,27 @@ input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     Eingeschaltet = false
 })
 let Alarm = false
-let Geraeusch = 0
+let Bewegung = 0
 let Licht = 0
 let Eingeschaltet = false
 let EmpfindlichkeitLicht = 120
-let EmpfindlichkeitGeraeusch = 70
+let EmpfindlichkeitBewegung = 1024
 Eingeschaltet = false
 let Debug = true
 if (Debug) {
     serial.redirectToUSB()
 }
-led.setBrightness(0)
 basic.forever(function () {
     if (Eingeschaltet) {
         basic.pause(10)
         Licht = input.lightLevel()
         basic.pause(10)
-        Geraeusch = input.soundLevel()
+        Bewegung = input.acceleration(Dimension.Strength)
         if (Debug) {
-            serial.writeNumber(Geraeusch)
+            serial.writeNumber(Bewegung)
             serial.writeLine("")
         }
-        if (Licht < EmpfindlichkeitLicht && Geraeusch >= EmpfindlichkeitGeraeusch) {
+        if (Licht < EmpfindlichkeitLicht && Bewegung >= EmpfindlichkeitBewegung) {
             Alarm = true
         }
         if (Alarm) {
