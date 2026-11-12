@@ -3,7 +3,7 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "v3": "*"
+        "v2": "*"
     },
     "files": [
         "main.blocks",

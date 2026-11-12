@@ -9,17 +9,23 @@ let Geraeusch = 0
 let Licht = 0
 let Eingeschaltet = false
 let EmpfindlichkeitLicht = 120
-let EmpfindlichkeitGeraeusch = 50
+let EmpfindlichkeitGeraeusch = 70
 Eingeschaltet = false
+let Debug = true
+if (Debug) {
+    serial.redirectToUSB()
+}
 led.setBrightness(0)
-serial.redirectToUSB()
 basic.forever(function () {
     if (Eingeschaltet) {
+        basic.pause(10)
         Licht = input.lightLevel()
-        basic.pause(100)
+        basic.pause(10)
         Geraeusch = input.soundLevel()
-        serial.writeNumber(Geraeusch)
-        serial.writeLine("")
+        if (Debug) {
+            serial.writeNumber(Geraeusch)
+            serial.writeLine("")
+        }
         if (Licht < EmpfindlichkeitLicht && Geraeusch >= EmpfindlichkeitGeraeusch) {
             Alarm = true
         }
